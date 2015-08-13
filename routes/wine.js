@@ -15,7 +15,7 @@ exports.findAll = function(req, res) {
 
 exports.findById = function(req, res) {
     res.send({id:req.params.id, name: "The name", description: "description"});
-}
+};
 
 var server = new Server('localhost', 3030, {auto_reconnect: true});
 db = new Db('winedb', server);
@@ -23,6 +23,5 @@ db = new Db('winedb', server);
 db.open(function(err, db){
     if(err) {
         console.log('The wines collection doesnt exist');
-        populateDB();
     }
-})
+});
