@@ -36,4 +36,29 @@ exports.findById = function(req, res) {
     });
 };
 
+exports.findAll = function(req, res) {
+    db.collection('wines', function(err, collection){
+        collection.find().toArray(function(err, items){
+            res.send(items);
+        });
+    });
+};
+
+exports.addWine = function(req,res) {
+    var wine = req.body;
+    console.log('Adding wine' + JSON.stringify(wine));
+    db.collection('wines', function (err, collection) {
+        collection.insert(wine, {safe:true}, function(err, result) {
+            if(err) {
+                res.send('error', 'error has occurred'); {
+                }
+
+            } else {
+                console.log('Success' + JSON.stringify(result[0]));
+                res.send(result[0]);
+            }
+        });
+    })
+
+};
 
