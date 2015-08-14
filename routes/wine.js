@@ -25,3 +25,15 @@ db.open(function(err, db){
         console.log('The wines collection doesnt exist');
     }
 });
+
+exports.findById = function(req, res) {
+    var id = req.params.id;
+    console.log('Retriveing wine' + id);
+    db.collection('wines', function(err, collection) {
+        collection.findOne({'_id': new BSON.ObjectID(id)}, function (err, item) {
+            res.send(item);
+        });
+    });
+};
+
+
