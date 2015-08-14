@@ -62,3 +62,37 @@ exports.addWine = function(req,res) {
 
 };
 
+exports.updateWine = function(req, res) {
+    var id = req.params.id;
+    var wine = req.body;
+    console.log('Updating wine' + id);
+    console.log(JSON.stringify(wine));
+    db.collection('wines', function(err, collection){
+        collection.update({'_id':new BSON.ObjectID(id)}, wine, {safe:true}, function(err,result) {
+            if (!err) {
+                console.log('')
+            } else {
+                console.log('' + result + 'document(s) updated');
+                res.send(wine);
+            }
+        });
+    });
+};
+
+
+exports.deleteWine = function(req, res) {
+    var id = req.params.id;
+    console.log('Deleting wine: ' + id);
+    db.collection('wines', function(err, collection) {
+        collection.remove({'_id':new BSON.ObjectID(id)}, {safe:true}, function(err, result) {
+            if (err) {
+                res.send({'error':'An error has occurred - ' + err});
+            } else {
+                console.log('' + result + ' document(s) deleted');
+                res.send(req.body);
+            }
+        });
+    });
+};
+
+
